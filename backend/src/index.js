@@ -14,17 +14,13 @@ app.get('/api/health', async (req, res) => {
         await pool.query('SELECT 1');
         res.json({ status: 'ok', database: 'connected' });
     } catch (error) {
-        console.error('Health check failed:', error);
-        res.status(500).json({
-            status: 'error',
-            message: error && error.message ? error.message : 'Unknown error',
-            code: error && error.code ? error.code : undefined,
-            errno: error && error.errno ? error.errno : undefined,
-            sqlMessage: error && error.sqlMessage ? error.sqlMessage : undefined
-        });
+        res.status(500).json({ status: 'error', message: error.message });
     }
 });
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+const propertiesRouter = require('./routes/properties'); 
+app.use('/api/properties', propertiesRouter)
