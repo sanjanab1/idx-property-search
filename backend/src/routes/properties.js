@@ -50,3 +50,23 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch properties' });
     }
 });
+
+//validate numeric inputs
+if (minPrice && isNaN(minPrice)) {
+    return res.status(400).json({ error: 'minPrice must be a number' });
+}
+if (maxPrice && isNaN(maxPrice)) {
+    return res.status(400).json({ error: 'maxPrice must be a number' });
+}
+if (beds && isNaN(beds)) {
+    return res.status(400).json({ error: 'beds must be a number' });
+}
+if (baths && isNaN(baths)) {
+    return res.status(400).json({ error: 'baths must be a number' });
+}
+if (limit < 1 || limit > 100) {
+    return res.status(400).json({ error: 'limit must be between 1 and 100' });
+}
+if (offset < 0) {
+    return res.status(400).json({ error: 'offset cannot be negative' });
+}
