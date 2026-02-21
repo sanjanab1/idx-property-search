@@ -46,6 +46,13 @@ router.get('/:id/openhouses', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const validation = validateListingId(id);
+    if (!validation.valid) {
+        return res.status(400).json({ error: validation.error });
+    }
+    
+    
     try {
         const { id } = req.params;
         const [results] = await pool.query(
@@ -67,6 +74,13 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+
+    const { id } = req.params;
+    const validation = validateListingId(id);
+    if (!validation.valid) {
+        return res.status(400).json({ error: validation.error });
+    }
+    
     try {
         const limit = parseInt(req.query.limit) || 20;
         const offset = parseInt(req.query.offset) || 0;
