@@ -4,6 +4,17 @@ const pool = require('../db/mysql');
 
 module.exports = router; 
 
+function validateListingId(id) {
+    if (!id || id.trim() === '') {
+        return { valid: false, error: 'Listing ID is required' };
+    }
+    if (id.length > 50) {
+        return { valid: false, error: 'Listing ID is too long' };
+    }
+    
+    return { valid: true };
+}
+
 router.get('/:id/openhouses', async (req, res) => {
     try {
         const { id } = req.params;
