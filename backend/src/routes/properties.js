@@ -4,6 +4,57 @@ const pool = require('../db/mysql');
 
 module.exports = router; 
 
+router.get('/:id/openhouses', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [propertyCheck] = await pool.query(
+        'SELECT ListingId FROM rets_property WHERE ListingId = ?',
+        [id]
+        );
+        if (propertyCheck.length === 0) {
+        return res.status(404).json({
+        error: 'Property not found',
+        message: `No property exists with ID: ${id}`
+            });
+        }
+        
+        const [openhouses] = await pool.query(
+            'SELECT * FROM rets_openhouse WHERE ListingId = ? ORDER BY OpenHouseDate, OpenHouseStartTime',
+            [id]
+        );
+
+        res.json({
+            propertyId: id,
+            count: openhouses.length,
+            openhouses
+                });
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Failed to fetch open houses' });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [results] = await pool.query(
+        'SELECT * FROM rets_property WHERE ListingId = ?',
+        [id]
+    );
+    if (results.length === 0) {
+        return res.status(404).json({
+            error: 'Property not found',
+            message: `No property exists with ID: ${id}`
+        });
+    }
+    
+        res.json(results[0]);
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Failed to fetch property details' });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 20;
