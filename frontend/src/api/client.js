@@ -17,3 +17,17 @@ export async function fetchProperties(params = {}) {
         throw error; 
     }
 }
+
+export async function fetchOpenHouses(listingId) {
+    try {
+        const response = await fetch(`${API_BASE}/api/properties/${listingId}/openhouses`);
+
+        if (!response.ok)
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+        return await response.json(); 
+    } catch (error) {
+        console.error('API Error:', error)
+        throw error; 
+    }
+}
