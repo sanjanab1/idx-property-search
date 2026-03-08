@@ -3,7 +3,7 @@ import { fetchProperties } from '../api/client';
 import './ListingsPage.css'; 
 
 function ListingsPage() { 
-    const [properties, setProperties] = useState{[]}; 
+    const [properties, setProperties] = useState([]); 
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null); 
     const [total, setTotal] = useState(0);
@@ -17,23 +17,23 @@ function ListingsPage() {
             setLoading(true); 
             setError(null); 
 
-            const data = await fetchProperties({ limit: 20, offset: 0}); 
+            const data = await fetchProperties({ limit: 20, offset: 0 }); 
 
-            setProperties(data.results); 
-            setTotal(data.total); 
+            setProperties(data.results || []); 
+            setTotal(data.total || 0); 
         } catch (err) { 
-            setError('Failed to load properties. Plesae try again.'); 
+            setError('Failed to load properties. Please try again.'); 
         } finally {
             setLoading(false); 
         }
     }
 
     if (loading) {
-        return <div className="Loading properties..."></div>; 
+        return <div className="loading">Loading properties...</div>; 
     }
 
     if (error) { 
-        return <div className="error">(error)</div>; 
+        return <div className="error">{error}</div>; 
     }
     
     return (
