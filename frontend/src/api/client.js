@@ -9,7 +9,7 @@ export async function fetchProperties(params = {}) {
         const response = await fetch(url); 
 
         if (!response.ok) 
-            throw new Error(`HTTP $(response.status): $(response.statusText)`);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
         return await response.json(); 
     } catch (error) {

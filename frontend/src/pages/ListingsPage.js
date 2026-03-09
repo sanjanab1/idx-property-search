@@ -21,7 +21,7 @@ function ListingsPage() {
             setError(null); 
 
             const params = { ...filters, limit: 20, offset: 0 };
-            const data = await fetchProperties({ limit: 20, offset: 0 }); 
+            const data = await fetchProperties(params); 
 
             setProperties(data.results || []); 
             setTotal(data.total || 0); 
@@ -47,27 +47,20 @@ function ListingsPage() {
     return (
         <div className="listings-page">
             <h1>Property Listings</h1>
-<           
-            PropertyFilters onSearch={handleSearch} />  
+            <PropertyFilters onSearch={handleSearch} />
 
-            {loading && <div className="loading">Loading properties...</div>}
-            {error && <div className="error">{error}</div>}
-            {!loading && !error && (
-                <>
-                    <p>Showing {properties.length} of {total} properties</p>
-                    
-                    {properties.length === 0 ? (
-                        <div className="no-results">
-                            No properties found matching your criteria. Try adjusting your filters.
-                        </div>
-                    ) : (
-                        <div className="property-grid">
-                            {properties.map(property => (
-                                <PropertyCard key={property.ListingId} property={property} />
-                            ))}
-                        </div>
-                    )}
-                </>
+            <p>Showing {properties.length} of {total} properties</p>
+
+            {properties.length === 0 ? (
+                <div className="no-results">
+                    No properties found matching your criteria. Try adjusting your filters.
+                </div>
+            ) : (
+                <div className="property-grid">
+                    {properties.map(property => (
+                        <PropertyCard key={property.L_ListingID || property.id} property={property} />
+                    ))}
+                </div>
             )}
         </div>
     );

@@ -19,7 +19,7 @@ router.get('/:id/openhouses', async (req, res) => {
     try {
         const { id } = req.params;
         const [propertyCheck] = await pool.query(
-        'SELECT ListingId FROM rets_property WHERE ListingId = ?',
+        'SELECT L_ListingID FROM rets_property WHERE L_ListingID = ?',
         [id]
         );
         if (propertyCheck.length === 0) {
@@ -30,7 +30,7 @@ router.get('/:id/openhouses', async (req, res) => {
         }
         
         const [openhouses] = await pool.query(
-            'SELECT * FROM rets_openhouse WHERE ListingId = ? ORDER BY OpenHouseDate, OpenHouseStartTime',
+            'SELECT * FROM rets_openhouse WHERE L_ListingID = ? ORDER BY OpenHouseDate, OH_StartTime',
             [id]
         );
 
@@ -56,7 +56,7 @@ router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const [results] = await pool.query(
-        'SELECT * FROM rets_property WHERE ListingId = ?',
+        'SELECT * FROM rets_property WHERE L_ListingID = ?',
         [id]
     );
     if (results.length === 0) {
@@ -74,13 +74,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-
-    const { id } = req.params;
-    const validation = validateListingId(id);
-    if (!validation.valid) {
-        return res.status(400).json({ error: validation.error });
-    }
-    
     try {
         const limit = parseInt(req.query.limit) || 20;
         const offset = parseInt(req.query.offset) || 0;
@@ -88,27 +81,27 @@ router.get('/', async (req, res) => {
         const conditions = [];
         const values = [];
         if (city) {
-            conditions.push('LOWER(TRIM(City)) = LOWER(TRIM(?))');
+            conditions.push('LOWER(TRIM(L_City)) = LOWER(TRIM(?))');
             values.push(city);
         }
         if (zipcode) {
-            conditions.push('PostalCode = ?');
+            conditions.push('L_Zip = ?');
             values.push(zipcode);
         }
         if (minPrice) {
-            conditions.push('ListPrice >= ?');
+            conditions.push('L_SystemPrice >= ?');
             values.push(parseFloat(minPrice));
         }
         if (maxPrice) {
-            conditions.push('ListPrice <= ?');
+            conditions.push('L_SystemPrice <= ?');
             values.push(parseFloat(maxPrice));
+        }
         if (beds) {
-            conditions.push('BedroomsTotal >= ?');
+            conditions.push('L_Keyword2 >= ?');
             values.push(parseInt(beds));
         }
-        }
         if (baths) {
-            conditions.push('BathroomsTotalInteger >= ?');
+            conditions.push('LM_Dec_3 >= ?');
             values.push(parseInt(baths));
         }
 
