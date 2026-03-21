@@ -4,33 +4,48 @@ import './ListingsPage.css';
 // integratng filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
 
-function ListingsPage() { 
-    const [properties, setProperties] = useState([]); 
-    const [loading, setLoading] = useState(true); 
-    const [error, setError] = useState(null); 
+function ListingsPage() {
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [total, setTotal] = useState(0);
     const [filters, setFilters] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(20);
 
-    useEffect(() => { 
+    useEffect(() => {
         loadProperties();
-    }, [filters]);
-
+    }, [filters, currentPage]);
+    
     async function loadProperties() {
         try {
-            setLoading(true); 
-            setError(null); 
+            setLoading(true);
+            setError(null);
 
-            const params = { ...filters, limit: 20, offset: 0 };
-            const data = await fetchProperties(params); 
-
-            setProperties(data.results || []); 
-            setTotal(data.total || 0); 
-        } catch (err) { 
-            setError('Failed to load properties. Please try again.'); 
+            const offset = (currentPage - 1) * itemsPerPage;
+            const params = { ...filters, limit: itemsPerPage, offset };
+            const data = await fetchProperties(params);
+            
+            setProperties(data.results);
+            setTotal(data.total);
+        } catch (err) {
+            setError('Failed to load properties. Please try again.');
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     }
+
+    const handleSearch = (newFilters) => {
+        setFilters(newFilters);
+        setCurrentPage(1); // Reset to page 1 when filters change
+    }; 
+    
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        window.scrollTo(0, 0); // Scroll to top
+    };
+
+    const totalPages = Math.ceil(total / itemsPerPage);
 
     if (loading) {
         return <div className="loading">Loading properties...</div>; 
@@ -39,10 +54,6 @@ function ListingsPage() {
     if (error) { 
         return <div className="error">{error}</div>; 
     }
-
-    const handleSearch = (newFilters) => {
-        setFilters(newFilters);
-    };
     
     return (
         <div className="listings-page">
