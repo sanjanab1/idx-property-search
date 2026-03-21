@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import { fetchProperties } from '../api/client'; 
+import { useNavigate } from 'react-router-dom';
 import './ListingsPage.css'; 
 // integratng filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
@@ -94,11 +95,15 @@ function ListingsPage() {
 function PropertyCard({ property }) {
     const photos = safeParsePhotos(property.L_Photos);
     const coverPhoto = photos[0] || null;
+    const listingId = property.L_ListingID || property.ListingId || property.id;
 
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/property/${property.ListingId}`);
+        if (!listingId) {
+            return;
+        }
+        navigate(`/property/${listingId}`);
     };
 
     return (
