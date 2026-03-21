@@ -3,6 +3,7 @@ import { fetchProperties } from '../api/client';
 import './ListingsPage.css'; 
 // integratng filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
+import Pagination from '../components/Pagination';
 
 function ListingsPage() {
     const [properties, setProperties] = useState([]);
@@ -60,7 +61,12 @@ function ListingsPage() {
             <h1>Property Listings</h1>
             <PropertyFilters onSearch={handleSearch} />
 
-            <p>Showing {properties.length} of {total} properties</p>
+            {!loading && !error && (
+                <p className="results-summary">
+                    Showing {((currentPage - 1) * itemsPerPage) + 1}-
+                    {Math.min(currentPage * itemsPerPage, total)} of {total.toLocaleString()} properties
+                </p>
+            )}
 
             {properties.length === 0 ? (
                 <div className="no-results">
@@ -72,6 +78,14 @@ function ListingsPage() {
                         <PropertyCard key={property.L_ListingID || property.id} property={property} />
                     ))}
                 </div>
+            )}
+
+            {!loading && !error && properties.length > 0 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
             )}
         </div>
     );
