@@ -95,8 +95,14 @@ function PropertyCard({ property }) {
     const photos = safeParsePhotos(property.L_Photos);
     const coverPhoto = photos[0] || null;
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/property/${property.ListingId}`);
+    };
+
     return (
-        <div className="property-card">
+        <div className="property-card"onClick={handleClick}>
             <div className="property-image">
                 {coverPhoto ? (
                     <img src={coverPhoto} alt={property.L_Address || 'Property'} />
