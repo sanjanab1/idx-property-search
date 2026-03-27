@@ -15,6 +15,9 @@ function ListingsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
 
+    const [sortBy, setSortBy] = useState('');
+    const [sortOrder, setSortOrder] = useState('ASC');
+
     useEffect(() => {
         loadProperties();
     }, [filters, currentPage]);
@@ -88,6 +91,25 @@ function ListingsPage() {
                     onPageChange={handlePageChange}
                 />
             )}
+
+            <div className="sort-controls">
+                <label>Sort by:</label>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                    <option value="">Default</option>
+                    <option value="ListPrice">Price</option>
+                    <option value="ListingContractDate">Date Listed</option>
+                    <option value="LivingArea">Size</option>
+                    <option value="BedroomsTotal">Bedrooms</option>
+                </select>
+
+                {sortBy && (
+                    <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                        <option value="ASC">Low to High</option>
+                        <option value="DESC">High to Low</option>
+                    </select>
+                )}
+            </div>
+
         </div>
     );
 }
