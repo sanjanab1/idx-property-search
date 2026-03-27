@@ -124,17 +124,35 @@ router.get('/', async (req, res) => {
             return res.status(400).json({ error: 'offset cannot be negative' });
         }
 
-    const whereClause = conditions.length > 0
-        ? 'WHERE ' + conditions.join(' AND ')
-        : '';
-    const countQuery = `SELECT COUNT(*) as total FROM rets_property ${whereClause}`;
-    const [countResult] = await pool.query(countQuery, values);
-    const total = countResult[0].total;
-    const dataQuery = `SELECT * FROM rets_property ${whereClause} LIMIT ? OFFSET ?`;
-    const [results] = await pool.query(dataQuery, [...values, limit, offset]);
-    res.json({ total, limit, offset, results });
-} catch (error) {
-    console.error('Database error:', error);
-    res.status(500).json({ error: 'Failed to fetch properties' });
-}
+        const whereClause = conditions.length > 0
+            ? 'WHERE ' + conditions.join(' AND ')
+            : '';
+        const countQuery = `SELECT COUNT(*) as total FROM rets_property ${whereClause}`;
+        const [countResult] = await pool.query(countQuery, values);
+        const total = countResult[0].total;
+
+
+        // Add sorting
+        let orderClause = '';
+        const validSortFields = ['ListPrice', 'ListingContractDate', 'LivingArea', 'BedroomsTotal'];
+        const validOrders = ['ASC', 'DESC'];
+        if (sortBy && validSortFields.includes(sortBy)) {
+            const order = validOrders.includes(sortOrder?.toUpperCase())
+                ? sortOrder.toUpperCase()
+                : 'ASC';
+            orderClause = `ORDER BY ${sortBy} ${order}`;
+        }
+
+
+        const dataQuery = `SELECT * FROM rets_property ${whereClause} ${orderClause} LIMIT ? OFFSET ?`;
+        const [results] = await pool.query(dataQuery, [...values, limit, offset]);
+
+        res.json({ total, limit, offset, results });
+
+        
+
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Failed to fetch properties' });
+    }
 });
