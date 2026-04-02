@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
 import { fetchProperties } from '../api/client'; 
-import { useNavigate } from 'react-router-dom';
 import './ListingsPage.css'; 
 // integratng filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
@@ -114,18 +113,4 @@ function ListingsPage() {
         </div>
     );
 }
-
-function safeParsePhotos(rawPhotos) {
-    if (!rawPhotos || typeof rawPhotos !== 'string') {
-        return [];
-    }
-
-    try {
-        const parsed = JSON.parse(rawPhotos);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
-}
-
 export default ListingsPage;

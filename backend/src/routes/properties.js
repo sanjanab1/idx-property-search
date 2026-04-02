@@ -1,5 +1,5 @@
-const experss = require('express');
-const router = experss.Router();
+const express = require('express');
+const router = express.Router();
 const pool = require('../db/mysql'); 
 
 module.exports = router; 
@@ -77,7 +77,7 @@ router.get('/', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 20;
         const offset = parseInt(req.query.offset) || 0;
-        const { city, zipcode, minPrice, maxPrice, beds, baths } = req.query;
+        const { city, zipcode, minPrice, maxPrice, beds, baths, sortBy, sortOrder } = req.query;
         const conditions = [];
         const values = [];
         if (city) {
