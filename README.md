@@ -5,7 +5,7 @@ A full-stack property search application built with React, Node.js/Express, and 
 - Paginated results
 - Property detail pages
 - Open house schedules
-- [Add your advanced feature here]
+- Allow users to sort properties by price, date listed, or size.
 ## Prerequisites
 - Node.js 18+ and npm
 - Docker Desktop
