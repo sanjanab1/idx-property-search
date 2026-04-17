@@ -74,5 +74,4 @@ PropertyCard.propTypes = {
         L_Photos: PropTypes.string
     }).isRequired
 };
-
 export default PropertyCard;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'; 
 import { fetchProperties } from '../api/client'; 
 import './ListingsPage.css'; 
-// integratng filtering into listings page
+// integrating filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
 import Pagination from '../components/Pagination';
 import PropertyCard from '../components/PropertyCard';
