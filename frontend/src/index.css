@@ -1,13 +1,40 @@
+:root {
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --bg-cream: #fef8ec;
+  --bg-mint: #eef8f6;
+  --surface: #ffffff;
+  --surface-soft: #fffaf1;
+  --text-main: #2a1f23;
+  --text-muted: #665662;
+
+  --accent-coral: #e2675a;
+  --accent-blue: #2f6eb0;
+  --accent-gold: #c79436;
+  --accent-mint: #4da08f;
+
+  --border-soft: #e7d9cb;
+  --shadow-soft: 0 10px 30px rgba(52, 33, 44, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-serif);
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 12% 15%, rgba(226, 103, 90, 0.14), transparent 26%),
+    radial-gradient(circle at 86% 0%, rgba(47, 110, 176, 0.2), transparent 28%),
+    linear-gradient(135deg, var(--bg-cream), var(--bg-mint));
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
 }
