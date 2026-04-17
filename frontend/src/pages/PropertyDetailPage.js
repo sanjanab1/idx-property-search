@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPropertyDetail, fetchOpenHouses } from '../api/client';
 import './PropertyDetailPage.css';
@@ -41,11 +41,7 @@ function PropertyDetailPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        loadPropertyData();
-    }, [id]);
-    
-    async function loadPropertyData() {
+    const loadPropertyData = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
@@ -60,7 +56,11 @@ function PropertyDetailPage() {
         } finally {
             setLoading(false);
         }
-    }
+    }, [id]);
+
+    useEffect(() => {
+        loadPropertyData();
+    }, [loadPropertyData]);
     
     if (loading) {
         return <div className="loading">Loading property details...</div>;

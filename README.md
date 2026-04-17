@@ -5,7 +5,7 @@ A full-stack property search application built with React, Node.js/Express, and 
 - Paginated results
 - Property detail pages
 - Open house schedules
-- [Add your advanced feature here]
+- Allow users to sort properties by price, date listed, or size.
 ## Prerequisites
 - Node.js 18+ and npm
 - Docker Desktop
@@ -122,6 +122,6 @@ Returns open house schedule for a property.
 - Clear node_modules: `rm -rf node_modules && npm install`
 - Check Node version: `node --version` (should be 18+)
 ## Contributors
-[Your Name] - Initial development
+Sanjana Bhupathi - Initial development
 ## License
 This project was created for educational purposes as part of the IDX Exchange internship program.
