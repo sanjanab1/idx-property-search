@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import './PropertyCard.css';
 
 function safeParsePhotos(rawPhotos) {
     if (!rawPhotos || typeof rawPhotos !== 'string') {
@@ -77,5 +76,3 @@ PropertyCard.propTypes = {
 };
 
 export default PropertyCard;
-
-

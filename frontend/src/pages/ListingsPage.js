@@ -4,7 +4,7 @@ import './ListingsPage.css';
 // integratng filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
 import Pagination from '../components/Pagination';
-import PropertyCard from '../components/PropertyCard'
+import PropertyCard from '../components/PropertyCard';
 
 function ListingsPage() {
     const [properties, setProperties] = useState([]);
