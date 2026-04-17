@@ -126,22 +126,22 @@ function PropertyDetailPage() {
             <div className="property-content">
                 <div className="property-main">
                     <div className="property-stats">
-                        <div className="stat">
+                        <div className="stat stat-bedrooms">
                             <div className="stat-value">{bedrooms ?? '-'}</div>
                             <div className="stat-label">Bedrooms</div>
                         </div>
-                        <div className="stat">
+                        <div className="stat stat-bathrooms">
                             <div className="stat-value">{bathrooms ?? '-'}</div>
                             <div className="stat-label">Bathrooms</div>
                         </div>
                         {livingArea && (
-                            <div className="stat">
+                            <div className="stat stat-area">
                                 <div className="stat-value">{Number(livingArea).toLocaleString()}</div>
                                 <div className="stat-label">Sq Ft</div>
                             </div>
                         )}
                         {yearBuilt && (
-                            <div className="stat">
+                            <div className="stat stat-year-built">
                                 <div className="stat-value">{yearBuilt}</div>
                                 <div className="stat-label">Year Built</div>
                             </div>

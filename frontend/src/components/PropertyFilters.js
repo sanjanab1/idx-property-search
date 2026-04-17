@@ -7,113 +7,160 @@ function PropertyFilters({ onSearch }) {
         minPrice: '',
         maxPrice: '',
         beds: '',
-        baths: ''
+        baths: '',
+        sortBy: '',
+        sortOrder: 'ASC'
     });
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFilters(prev => ({ ...prev, [name]: value }));
-};
-const handleSubmit = (e) => {
-    e.preventDefault();
+        setFilters(prev => {
+            if (name === 'sortBy' && value === '') {
+                return { ...prev, sortBy: '', sortOrder: 'ASC' };
+            }
+            return { ...prev, [name]: value };
+        });
+    };
 
-    // Build clean filter object (remove empty values)
-    const cleanFilters = {};
-    Object.keys(filters).forEach(key => {
-        if (filters[key] && filters[key].trim() !== '') {
-            cleanFilters[key] = filters[key].trim();
-        }   
-    });
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    onSearch(cleanFilters);
-};
+        // Build clean filter object (remove empty values)
+        const cleanFilters = {};
+        Object.keys(filters).forEach(key => {
+            const currentValue = filters[key];
+            if (typeof currentValue !== 'string' || currentValue.trim() === '') {
+                return;
+            }
 
-const handleClear = () => {
-    setFilters({
-        city: '',
-        zipcode: '',
-        minPrice: '',
-        maxPrice: '',
-        beds: '',
-        baths: ''
-    });
-    onSearch({});
-};
+            if (key === 'sortOrder' && !filters.sortBy) {
+                return;
+            }
 
-return (
-    <form className="property-filters" onSubmit={handleSubmit}>
-        <div className="filter-row">
-            <div className="filter-group">
-                <label>City</label>
-                <input
-                    type="text"
-                    name="city"
-                    value={filters.city}
-                    onChange={handleChange}
-                    placeholder="Enter city"
-                />
+            cleanFilters[key] = currentValue.trim();
+        });
+
+        onSearch(cleanFilters);
+    };
+
+    const handleClear = () => {
+        setFilters({
+            city: '',
+            zipcode: '',
+            minPrice: '',
+            maxPrice: '',
+            beds: '',
+            baths: '',
+            sortBy: '',
+            sortOrder: 'ASC'
+        });
+        onSearch({});
+    };
+
+    return (
+        <form className="property-filters" onSubmit={handleSubmit}>
+            <div className="filter-row">
+                <div className="filter-group">
+                    <label htmlFor="city">City</label>
+                    <input
+                        id="city"
+                        type="text"
+                        name="city"
+                        value={filters.city}
+                        onChange={handleChange}
+                        placeholder="Enter city"
+                    />
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="zipcode">ZIP Code</label>
+                    <input
+                        id="zipcode"
+                        type="text"
+                        name="zipcode"
+                        value={filters.zipcode}
+                        onChange={handleChange}
+                        placeholder="Enter ZIP"
+                    />
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="minPrice">Min Price</label>
+                    <input
+                        id="minPrice"
+                        type="number"
+                        name="minPrice"
+                        value={filters.minPrice}
+                        onChange={handleChange}
+                        placeholder="$0"
+                    />
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="maxPrice">Max Price</label>
+                    <input
+                        id="maxPrice"
+                        type="number"
+                        name="maxPrice"
+                        value={filters.maxPrice}
+                        onChange={handleChange}
+                        placeholder="No max"
+                    />
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="beds">Beds</label>
+                    <select id="beds" name="beds" value={filters.beds} onChange={handleChange}>
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="baths">Baths</label>
+                    <select id="baths" name="baths" value={filters.baths} onChange={handleChange}>
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="sortBy">Sort By</label>
+                    <select id="sortBy" name="sortBy" value={filters.sortBy} onChange={handleChange}>
+                        <option value="">Default</option>
+                        <option value="ListPrice">Price</option>
+                        <option value="ListingContractDate">Date Listed</option>
+                        <option value="LivingArea">Size</option>
+                        <option value="BedroomsTotal">Bedrooms</option>
+                    </select>
+                </div>
+
+                <div className="filter-group">
+                    <label htmlFor="sortOrder">Sort Order</label>
+                    <select
+                        id="sortOrder"
+                        name="sortOrder"
+                        value={filters.sortOrder}
+                        onChange={handleChange}
+                        disabled={!filters.sortBy}
+                    >
+                        <option value="ASC">Low to High</option>
+                        <option value="DESC">High to Low</option>
+                    </select>
+                </div>
             </div>
 
-            <div className="filter-group">
-                <label>ZIP Code</label>
-                <input
-                    type="text"
-                    name="zipcode"
-                    value={filters.zipcode}
-                    onChange={handleChange}
-                    placeholder="Enter ZIP"
-                />
-            </div>
-
-            <div className="filter-group">
-                <label>Min Price</label>
-                <input
-                    type="number"
-                    name="minPrice"
-                    value={filters.minPrice}
-                    onChange={handleChange}
-                    placeholder="$0"
-                />
-            </div>
-
-            <div className="filter-group">
-                <label>Max Price</label>
-                <input
-                    type="number"
-                    name="maxPrice"
-                    value={filters.maxPrice}
-                    onChange={handleChange}
-                    placeholder="No max"
-                />
-            </div>
-
-            <div className="filter-group">
-                <label>Beds</label>
-                <select name="beds" value={filters.beds} onChange={handleChange}>
-                    <option value="">Any</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                    <option value="4">4+</option>
-                    <option value="5">5+</option>
-                </select>
-            </div>
-
-            <div className="filter-group">
-                <label>Baths</label>
-                <select name="baths" value={filters.baths} onChange={handleChange}>
-                    <option value="">Any</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                    <option value="4">4+</option>
-                </select>
-            </div>
-        </div>
-
-        <div className="filter-actions">
+            <div className="filter-actions">
                 <button type="submit" className="btn-primary">Search</button>
                 <button type="button" onClick={handleClear} className="btn-secondary">
-                Clear Filters
+                    Clear Filters
                 </button>
             </div>
         </form>

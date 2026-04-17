@@ -1,7 +1,8 @@
-property-filters {
-    background: #f5f5f5;
+.property-filters {
+    background: linear-gradient(140deg, #fffaf1, #eef8f6);
+    border: 1px solid var(--border-soft);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 14px;
     margin-bottom: 30px;
 }
 
@@ -19,24 +20,34 @@ property-filters {
 
 .filter-group label {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-main);
 }
 
 .filter-group input,
 .filter-group select {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
     font-size: 14px;
+    background: var(--surface);
+    color: var(--text-main);
+    font-family: var(--font-serif);
 }
 
 .filter-group input:focus,
 .filter-group select:focus {
     outline: none;
-    border-color: #1976d2;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(47, 110, 176, 0.15);
 }   
+
+.filter-group select:disabled {
+    background: #f3f2ef;
+    color: #9a8f98;
+    cursor: not-allowed;
+}
 
 .filter-actions {
     display: flex;
@@ -47,28 +58,41 @@ property-filters {
 .btn-secondary {
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: transform 0.15s ease, background-color 0.2s;
+    font-family: var(--font-serif);
 }
 
 .btn-primary {
-    background-color: #1976d2;
+    background-color: var(--accent-coral);
     color: white;
 }
 
 .btn-primary:hover {
-background-color: #1565c0;
+    background-color: #ca4d42;
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
-    background-color: #fff;
-    color: #666;
-    border: 1px solid #ddd;
+    background-color: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-soft);
 }
 
 .btn-secondary:hover {
-    background-color: #f5f5f5;
+    background-color: #fff6ea;
+}
+
+@media (max-width: 768px) {
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
 }

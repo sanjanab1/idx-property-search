@@ -1,23 +1,25 @@
 .property-detail-page {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 28px 20px 36px;
 }
 
 .btn-back {
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     margin-bottom: 20px;
     font-size: 14px;
     transition: all 0.2s;
+    color: var(--text-main);
+    font-family: var(--font-serif);
 }
 
 .btn-back:hover {
-    background: #f5f5f5;
-    border-color: #1976d2;
+    background: var(--surface-soft);
+    border-color: var(--accent-blue);
 }
 
 .property-header {
@@ -25,7 +27,7 @@
 }
 
 .property-header h1 {
-    color: #1976d2;
+    color: var(--accent-coral);
     margin: 0 0 10px 0;
 }
 
@@ -36,15 +38,15 @@
 }
 
 .property-location {
-    color: #666;
+    color: var(--text-muted);
     margin: 5px 0;
 }
 
 .property-image-main {
     width: 100%;
     height: 400px;
-    background: #f5f5f5;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(47, 110, 176, 0.16), rgba(226, 103, 90, 0.16));
+    border-radius: 14px;
     overflow: hidden;
     margin-bottom: 30px;
 }
@@ -66,25 +68,66 @@
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 20px;
     padding: 20px;
-    background: #f5f5f5;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #fffaf1, #f5faf9);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
     margin-bottom: 30px;
 }
 
 .stat {
+    padding: 14px 10px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: var(--surface);
     text-align: center;
 }
 
 .stat-value {
     font-size: 28px;
     font-weight: bold;
-    color: #1976d2;
+    color: var(--accent-blue);
 }
 
 .stat-label {
     font-size: 14px;
-    color: #666;
+    color: var(--text-muted);
     margin-top: 5px;
+}
+
+.stat-bedrooms {
+    background: linear-gradient(150deg, rgba(226, 103, 90, 0.22), rgba(226, 103, 90, 0.06));
+    border-color: rgba(226, 103, 90, 0.34);
+}
+
+.stat-bedrooms .stat-value {
+    color: #ba3f34;
+}
+
+.stat-bathrooms {
+    background: linear-gradient(150deg, rgba(77, 160, 143, 0.22), rgba(77, 160, 143, 0.06));
+    border-color: rgba(77, 160, 143, 0.34);
+}
+
+.stat-bathrooms .stat-value {
+    color: #2b7c6d;
+}
+
+.stat-area {
+    background: linear-gradient(150deg, rgba(47, 110, 176, 0.24), rgba(47, 110, 176, 0.07));
+    border-color: rgba(47, 110, 176, 0.36);
+}
+
+.stat-area .stat-value {
+    color: #205994;
+}
+
+.stat-year-built {
+    background: linear-gradient(150deg, rgba(199, 148, 54, 0.24), rgba(199, 148, 54, 0.06));
+    border-color: rgba(199, 148, 54, 0.36);
+}
+
+.stat-year-built .stat-value {
+    color: #8e6618;
 }
 
 .property-section {
@@ -103,14 +146,14 @@
 
 .detail-item {
     display: flex;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-soft);
     padding-bottom: 10px;
 }
 
 .detail-label {
     font-weight: 500;
     width: 180px;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .detail-value {
@@ -119,7 +162,7 @@
 
 .property-description {
     line-height: 1.6;
-    color: #333;
+    color: var(--text-main);
 }
 
 .property-sidebar {
@@ -130,9 +173,10 @@
 
 .open-houses-section,
 .listing-info-section {
-    background: #f5f5f5;
+    background: linear-gradient(145deg, #fffdf7, #f6fbfa);
+    border: 1px solid var(--border-soft);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-bottom: 20px;
 }
 
@@ -149,9 +193,10 @@
 }
 
 .open-house-item {
-    background: white;
+    background: var(--surface);
     padding: 15px;
-    border-radius: 4px;
+    border-radius: 10px;
+    border: 1px solid rgba(77, 160, 143, 0.22);
 }
 
 .oh-date {
@@ -160,17 +205,17 @@
 }
 
 .oh-time {
-    color: #1976d2;
+    color: var(--accent-mint);
     margin-bottom: 8px;
 }
 
 .oh-remarks {
     font-size: 14px;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .no-open-houses {
-    color: #666;
+    color: var(--text-muted);
     font-style: italic;
 }
 
@@ -187,7 +232,7 @@
 
 .info-label {
     font-weight: 500;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .info-value {
@@ -207,6 +252,10 @@
 }
 
 @media (max-width: 768px) {
+    .property-detail-page {
+        padding: 20px 14px 30px;
+    }
+
     .property-content {
         grid-template-columns: 1fr;
     }

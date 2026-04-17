@@ -75,9 +75,21 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 20;
-        const offset = parseInt(req.query.offset) || 0;
-        const { city, zipcode, minPrice, maxPrice, beds, baths, sortBy, sortOrder } = req.query;
+        const {
+            city,
+            zipcode,
+            minPrice,
+            maxPrice,
+            beds,
+            baths,
+            sortBy,
+            sortOrder,
+            limit: rawLimit,
+            offset: rawOffset
+        } = req.query;
+
+        const limit = rawLimit === undefined ? 20 : parseInt(rawLimit, 10);
+        const offset = rawOffset === undefined ? 0 : parseInt(rawOffset, 10);
         const conditions = [];
         const values = [];
         if (city) {
@@ -117,10 +129,10 @@ router.get('/', async (req, res) => {
         if (baths && isNaN(baths)) {
             return res.status(400).json({ error: 'baths must be a number' });
         }
-        if (limit < 1 || limit > 100) {
+        if (Number.isNaN(limit) || limit < 1 || limit > 100) {
             return res.status(400).json({ error: 'limit must be between 1 and 100' });
         }
-        if (offset < 0) {
+        if (Number.isNaN(offset) || offset < 0) {
             return res.status(400).json({ error: 'offset cannot be negative' });
         }
 

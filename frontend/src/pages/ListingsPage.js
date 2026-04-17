@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { fetchProperties } from '../api/client'; 
 import './ListingsPage.css'; 
-// integratng filtering into listings page
+// integrating filtering into listings page
 import PropertyFilters from '../components/PropertyFilters';
 import Pagination from '../components/Pagination';
-import PropertyCard from '../components/PropertyCard'
+import PropertyCard from '../components/PropertyCard';
 
 function ListingsPage() {
     const [properties, setProperties] = useState([]);
@@ -15,30 +15,27 @@ function ListingsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
 
-    const [sortBy, setSortBy] = useState('');
-    const [sortOrder, setSortOrder] = useState('ASC');
-
-    const loadProperties = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError(null);
-
-            const offset = (currentPage - 1) * itemsPerPage;
-            const params = { ...filters, limit: itemsPerPage, offset };
-            const data = await fetchProperties(params);
-            
-            setProperties(data.results);
-            setTotal(data.total);
-        } catch (err) {
-            setError('Failed to load properties. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    }, [filters, currentPage, itemsPerPage]);
-
     useEffect(() => {
+        async function loadProperties() {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const offset = (currentPage - 1) * itemsPerPage;
+                const params = { ...filters, limit: itemsPerPage, offset };
+                const data = await fetchProperties(params);
+
+                setProperties(data.results);
+                setTotal(data.total);
+            } catch (err) {
+                setError('Failed to load properties. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        }
+
         loadProperties();
-    }, [loadProperties]);
+    }, [filters, currentPage, itemsPerPage]);
 
     const handleSearch = (newFilters) => {
         setFilters(newFilters);
@@ -62,7 +59,15 @@ function ListingsPage() {
     
     return (
         <div className="listings-page">
-            <h1>Property Listings</h1>
+            <header className="listings-hero">
+                <div className="hero-content">
+                    <h1>Property Listings</h1>
+                    <p className="hero-subtitle">
+                        Explore neighborhoods, compare homes, and fine-tune results with filters and sorting.
+                    </p>
+                </div>
+            </header>
+
             <PropertyFilters onSearch={handleSearch} />
 
             {!loading && !error && (
@@ -91,24 +96,6 @@ function ListingsPage() {
                     onPageChange={handlePageChange}
                 />
             )}
-
-            <div className="sort-controls">
-                <label>Sort by:</label>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                    <option value="">Default</option>
-                    <option value="ListPrice">Price</option>
-                    <option value="ListingContractDate">Date Listed</option>
-                    <option value="LivingArea">Size</option>
-                    <option value="BedroomsTotal">Bedrooms</option>
-                </select>
-
-                {sortBy && (
-                    <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                        <option value="ASC">Low to High</option>
-                        <option value="DESC">High to Low</option>
-                    </select>
-                )}
-            </div>
 
         </div>
     );
