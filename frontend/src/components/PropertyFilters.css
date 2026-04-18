@@ -1,5 +1,5 @@
 .property-filters {
-    background: linear-gradient(140deg, #fffaf1, #eef8f6);
+    background: linear-gradient(140deg, #f8f2e8, #eef1e7);
     border: 1px solid var(--border-soft);
     padding: 20px;
     border-radius: 14px;
@@ -39,8 +39,8 @@
 .filter-group input:focus,
 .filter-group select:focus {
     outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px rgba(47, 110, 176, 0.15);
+    border-color: var(--accent-brown);
+    box-shadow: 0 0 0 3px rgba(138, 98, 69, 0.14);
 }   
 
 .filter-group select:disabled {
@@ -67,12 +67,12 @@
 }
 
 .btn-primary {
-    background-color: var(--accent-coral);
+    background-color: var(--accent-brown);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #ca4d42;
+    background-color: var(--accent-brown-dark);
     transform: translateY(-1px);
 }
 
@@ -83,7 +83,7 @@
 }
 
 .btn-secondary:hover {
-    background-color: #fff6ea;
+    background-color: #f6f0e7;
 }
 
 @media (max-width: 768px) {

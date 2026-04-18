@@ -20,8 +20,8 @@
 }
 
 .pagination-btn:hover:not(:disabled) {
-    background: #fff6ea;
-    border-color: var(--accent-blue);
+    background: #f6f0e7;
+    border-color: var(--accent-brown);
 }
 
 .pagination-btn:disabled {
@@ -48,14 +48,14 @@
 }
 
 .pagination-number:hover {
-    background: #fff6ea;
-    border-color: var(--accent-blue);
+    background: #f6f0e7;
+    border-color: var(--accent-brown);
 }
 
 .pagination-number.active {
-    background: var(--accent-blue);
+    background: var(--accent-brown);
     color: white;
-    border-color: var(--accent-blue);
+    border-color: var(--accent-brown);
 }
 
 .pagination-ellipsis {

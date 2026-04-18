@@ -19,7 +19,7 @@
 
 .btn-back:hover {
     background: var(--surface-soft);
-    border-color: var(--accent-blue);
+    border-color: var(--accent-brown);
 }
 
 .property-header {
@@ -27,7 +27,7 @@
 }
 
 .property-header h1 {
-    color: var(--accent-coral);
+    color: var(--accent-brown);
     margin: 0 0 10px 0;
 }
 
@@ -45,7 +45,7 @@
 .property-image-main {
     width: 100%;
     height: 400px;
-    background: linear-gradient(135deg, rgba(47, 110, 176, 0.16), rgba(226, 103, 90, 0.16));
+    background: linear-gradient(135deg, rgba(124, 145, 121, 0.16), rgba(138, 98, 69, 0.14));
     border-radius: 14px;
     overflow: hidden;
     margin-bottom: 30px;
@@ -68,7 +68,7 @@
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 20px;
     padding: 20px;
-    background: linear-gradient(135deg, #fffaf1, #f5faf9);
+    background: linear-gradient(135deg, #fbf7f1, #f4f7f1);
     border: 1px solid var(--border-soft);
     border-radius: 12px;
     margin-bottom: 30px;
@@ -85,7 +85,7 @@
 .stat-value {
     font-size: 28px;
     font-weight: bold;
-    color: var(--accent-blue);
+    color: var(--accent-brown);
 }
 
 .stat-label {
@@ -95,39 +95,39 @@
 }
 
 .stat-bedrooms {
-    background: linear-gradient(150deg, rgba(226, 103, 90, 0.22), rgba(226, 103, 90, 0.06));
-    border-color: rgba(226, 103, 90, 0.34);
+    background: linear-gradient(150deg, rgba(138, 98, 69, 0.12), rgba(138, 98, 69, 0.04));
+    border-color: rgba(138, 98, 69, 0.2);
 }
 
 .stat-bedrooms .stat-value {
-    color: #ba3f34;
+    color: #7e593e;
 }
 
 .stat-bathrooms {
-    background: linear-gradient(150deg, rgba(77, 160, 143, 0.22), rgba(77, 160, 143, 0.06));
-    border-color: rgba(77, 160, 143, 0.34);
+    background: linear-gradient(150deg, rgba(124, 145, 121, 0.12), rgba(124, 145, 121, 0.04));
+    border-color: rgba(124, 145, 121, 0.2);
 }
 
 .stat-bathrooms .stat-value {
-    color: #2b7c6d;
+    color: #667760;
 }
 
 .stat-area {
-    background: linear-gradient(150deg, rgba(47, 110, 176, 0.24), rgba(47, 110, 176, 0.07));
-    border-color: rgba(47, 110, 176, 0.36);
+    background: linear-gradient(150deg, rgba(184, 154, 123, 0.16), rgba(184, 154, 123, 0.05));
+    border-color: rgba(184, 154, 123, 0.25);
 }
 
 .stat-area .stat-value {
-    color: #205994;
+    color: #8f7257;
 }
 
 .stat-year-built {
-    background: linear-gradient(150deg, rgba(199, 148, 54, 0.24), rgba(199, 148, 54, 0.06));
-    border-color: rgba(199, 148, 54, 0.36);
+    background: linear-gradient(150deg, rgba(111, 75, 53, 0.12), rgba(111, 75, 53, 0.04));
+    border-color: rgba(111, 75, 53, 0.2);
 }
 
 .stat-year-built .stat-value {
-    color: #8e6618;
+    color: #6f4b35;
 }
 
 .property-section {
@@ -173,7 +173,7 @@
 
 .open-houses-section,
 .listing-info-section {
-    background: linear-gradient(145deg, #fffdf7, #f6fbfa);
+    background: linear-gradient(145deg, #fffdf8, #f6f2ea);
     border: 1px solid var(--border-soft);
     padding: 20px;
     border-radius: 12px;
@@ -205,7 +205,7 @@
 }
 
 .oh-time {
-    color: var(--accent-mint);
+    color: var(--accent-brown);
     margin-bottom: 8px;
 }
 

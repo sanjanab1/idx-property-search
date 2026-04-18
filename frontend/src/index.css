@@ -2,20 +2,21 @@
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --bg-cream: #fef8ec;
-  --bg-mint: #eef8f6;
-  --surface: #ffffff;
-  --surface-soft: #fffaf1;
-  --text-main: #2a1f23;
-  --text-muted: #665662;
+  --bg-cream: #f6efe4;
+  --bg-sage: #edf2ea;
+  --surface: #fffdf9;
+  --surface-soft: #f7f1e9;
+  --text-main: #2f2520;
+  --text-muted: #6b5d55;
 
-  --accent-coral: #e2675a;
-  --accent-blue: #2f6eb0;
-  --accent-gold: #c79436;
-  --accent-mint: #4da08f;
+  --accent-brown: #8a6245;
+  --accent-brown-dark: #6f4b35;
+  --accent-sage: #7c9179;
+  --accent-sage-deep: #61745f;
+  --accent-clay: #b89a7b;
 
-  --border-soft: #e7d9cb;
-  --shadow-soft: 0 10px 30px rgba(52, 33, 44, 0.1);
+  --border-soft: #e3d8cb;
+  --shadow-soft: 0 10px 30px rgba(74, 54, 40, 0.08);
 }
 
 * {
@@ -27,9 +28,9 @@ body {
   font-family: var(--font-serif);
   color: var(--text-main);
   background:
-    radial-gradient(circle at 12% 15%, rgba(226, 103, 90, 0.14), transparent 26%),
-    radial-gradient(circle at 86% 0%, rgba(47, 110, 176, 0.2), transparent 28%),
-    linear-gradient(135deg, var(--bg-cream), var(--bg-mint));
+    radial-gradient(circle at 15% 15%, rgba(124, 145, 121, 0.12), transparent 26%),
+    radial-gradient(circle at 88% 0%, rgba(138, 98, 69, 0.1), transparent 24%),
+    linear-gradient(135deg, var(--bg-cream), var(--bg-sage));
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
