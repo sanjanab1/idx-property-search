@@ -19,44 +19,94 @@ function ListingsPage() {
     const { favorites, isFavorite, addFavorite, removeFavorite, clearFavorites } = useFavorites();
 
     useEffect(() => {
-        async function loadProperties() {
+        if (activeTab !== 'listings') {
+            return;
+        }
+
+        let cancelled = false;
+
+        async function loadListings() {
             try {
                 setLoading(true);
                 setError(null);
-
-                if (activeTab === 'favorites') {
-                    const favoriteIds = favorites.map(String);
-                    const favoriteResults = await Promise.all(
-                        favoriteIds.map(async (listingId) => {
-                            try {
-                                return await fetchPropertyDetail(listingId);
-                            } catch {
-                                return null;
-                            }
-                        })
-                    );
-
-                    const favoriteProperties = favoriteResults.filter(Boolean);
-                    setProperties(favoriteProperties);
-                    setTotal(favoriteProperties.length);
-                    return;
-                }
 
                 const offset = (currentPage - 1) * itemsPerPage;
                 const params = { ...filters, limit: itemsPerPage, offset };
                 const data = await fetchProperties(params);
 
+                if (cancelled) {
+                    return;
+                }
+
                 setProperties(data.results);
                 setTotal(data.total);
             } catch (err) {
+                if (cancelled) {
+                    return;
+                }
                 setError('Failed to load properties. Please try again.');
             } finally {
-                setLoading(false);
+                if (!cancelled) {
+                    setLoading(false);
+                }
             }
         }
 
-        loadProperties();
-    }, [activeTab, filters, currentPage, itemsPerPage, favorites]);
+        loadListings();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [activeTab, filters, currentPage, itemsPerPage]);
+
+    useEffect(() => {
+        if (activeTab !== 'favorites') {
+            return;
+        }
+
+        let cancelled = false;
+
+        async function loadFavorites() {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const favoriteIds = favorites.map(String);
+                const favoriteResults = await Promise.all(
+                    favoriteIds.map(async (listingId) => {
+                        try {
+                            return await fetchPropertyDetail(listingId);
+                        } catch {
+                            return null;
+                        }
+                    })
+                );
+
+                if (cancelled) {
+                    return;
+                }
+
+                const favoriteProperties = favoriteResults.filter(Boolean);
+                setProperties(favoriteProperties);
+                setTotal(favoriteProperties.length);
+            } catch (err) {
+                if (cancelled) {
+                    return;
+                }
+                setError('Failed to load properties. Please try again.');
+            } finally {
+                if (!cancelled) {
+                    setLoading(false);
+                }
+            }
+        }
+
+        loadFavorites();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [activeTab, favorites]);
 
     const handleSearch = (newFilters) => {
         setFilters(newFilters);

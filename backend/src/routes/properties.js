@@ -144,15 +144,30 @@ router.get('/', async (req, res) => {
         const total = countResult[0].total;
 
 
-        // Add sorting
+        // Map UI sort keys to known DB columns to avoid invalid ORDER BY fields.
         let orderClause = '';
-        const validSortFields = ['ListPrice', 'ListingContractDate', 'LivingArea', 'BedroomsTotal'];
+        const sortColumnMap = {
+            price: 'L_SystemPrice',
+            ListPrice: 'L_SystemPrice',
+            date: 'ListingContractDate',
+            ListingContractDate: 'ListingContractDate',
+            size: 'LM_Int2_3',
+            LivingArea: 'LM_Int2_3',
+            bedrooms: 'L_Keyword2',
+            BedroomsTotal: 'L_Keyword2'
+        };
         const validOrders = ['ASC', 'DESC'];
-        if (sortBy && validSortFields.includes(sortBy)) {
+        const mappedSortColumn = sortColumnMap[sortBy];
+
+        if (sortBy && !mappedSortColumn) {
+            return res.status(400).json({ error: 'Invalid sortBy value' });
+        }
+
+        if (mappedSortColumn) {
             const order = validOrders.includes(sortOrder?.toUpperCase())
                 ? sortOrder.toUpperCase()
                 : 'ASC';
-            orderClause = `ORDER BY ${sortBy} ${order}`;
+            orderClause = `ORDER BY ${mappedSortColumn} ${order}`;
         }
 
 
