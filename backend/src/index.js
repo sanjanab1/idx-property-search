@@ -1,5 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+// Allow requests from your deployed frontend
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true
+};
+app.use(cors(corsOptions));
 const pool = require('./db/mysql');
 require('dotenv').config();
 
