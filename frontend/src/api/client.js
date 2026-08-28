@@ -1,5 +1,7 @@
 // leave empty for proxy 
-const API_BASE = ''; 
+// const API_BASE = ''; 
+// fixing for production 
+const API_BASE = process.env.REACT_APP_API_URL || '';
 
 export async function fetchProperties(params = {}) {
     try {
