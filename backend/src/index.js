@@ -1,18 +1,19 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
+const pool = require('./db/mysql');
+const propertiesRouter = require('./routes/properties');
+
+const app = express();
+const PORT = process.env.PORT || 5001;
+
 // Allow requests from your deployed frontend
 const corsOptions = {
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true
 };
 app.use(cors(corsOptions));
-const pool = require('./db/mysql');
-require('dotenv').config();
-
-const app = express();
-const PORT = process.env.PORT || 5001;
-
-app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -30,9 +31,8 @@ app.get('/api/health', async (req, res) => {
     }
 });
 
+app.use('/api/properties', propertiesRouter);
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
-
-const propertiesRouter = require('./routes/properties'); 
-app.use('/api/properties', propertiesRouter)
