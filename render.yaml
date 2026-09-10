@@ -2,6 +2,7 @@ services:
   - type: web
     name: idx-property-search-backend
     runtime: node
+    plan: free
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
@@ -24,6 +25,7 @@ services:
   - type: web
     name: idx-property-search-frontend
     runtime: static
+    plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: build
