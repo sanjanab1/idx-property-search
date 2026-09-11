@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchProperties, fetchPropertyDetail } from '../api/client';
 import './ListingsPage.css';
 // integrating filtering into listings page
