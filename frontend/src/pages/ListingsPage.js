@@ -17,7 +17,7 @@ function ListingsPage() {
     const [itemsPerPage] = useState(20);
     const [activeTab, setActiveTab] = useState('listings');
     const { favorites, isFavorite, addFavorite, removeFavorite, clearFavorites } = useFavorites();
-    const loadedListingsKey = useRef(null);
+    const listingsCache = useRef({ key: null, properties: [], total: 0 });
 
     useEffect(() => {
         if (activeTab !== 'listings') {
@@ -28,7 +28,11 @@ function ListingsPage() {
         const params = { ...filters, limit: itemsPerPage, offset };
         const key = JSON.stringify(params);
 
-        if (loadedListingsKey.current === key) {
+        if (listingsCache.current.key === key) {
+            setProperties(listingsCache.current.properties);
+            setTotal(listingsCache.current.total);
+            setError(null);
+            setLoading(false);
             return;
         }
 
@@ -47,7 +51,7 @@ function ListingsPage() {
 
                 setProperties(data.results);
                 setTotal(data.total);
-                loadedListingsKey.current = key;
+                listingsCache.current = { key, properties: data.results, total: data.total };
             } catch (err) {
                 if (cancelled) {
                     return;
