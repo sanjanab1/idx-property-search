@@ -17,9 +17,18 @@ function ListingsPage() {
     const [itemsPerPage] = useState(20);
     const [activeTab, setActiveTab] = useState('listings');
     const { favorites, isFavorite, addFavorite, removeFavorite, clearFavorites } = useFavorites();
+    const loadedListingsKey = useRef(null);
 
     useEffect(() => {
         if (activeTab !== 'listings') {
+            return;
+        }
+
+        const offset = (currentPage - 1) * itemsPerPage;
+        const params = { ...filters, limit: itemsPerPage, offset };
+        const key = JSON.stringify(params);
+
+        if (loadedListingsKey.current === key) {
             return;
         }
 
@@ -30,8 +39,6 @@ function ListingsPage() {
                 setLoading(true);
                 setError(null);
 
-                const offset = (currentPage - 1) * itemsPerPage;
-                const params = { ...filters, limit: itemsPerPage, offset };
                 const data = await fetchProperties(params);
 
                 if (cancelled) {
@@ -40,6 +47,7 @@ function ListingsPage() {
 
                 setProperties(data.results);
                 setTotal(data.total);
+                loadedListingsKey.current = key;
             } catch (err) {
                 if (cancelled) {
                     return;
