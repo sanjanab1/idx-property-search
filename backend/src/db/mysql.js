@@ -7,7 +7,14 @@ require('dotenv').config();
 function loadCaCert() {
     const value = process.env.DB_SSL_CA;
     if (!value) return undefined;
-    if (value.includes('BEGIN CERTIFICATE')) return value;
+    if (value.includes('BEGIN CERTIFICATE')) {
+        // Env var UIs often collapse the PEM's line breaks into one line,
+        // which breaks certificate parsing -- reinsert them if needed.
+        return value
+            .replace(/-----BEGIN CERTIFICATE-----/g, '-----BEGIN CERTIFICATE-----\n')
+            .replace(/-----END CERTIFICATE-----/g, '\n-----END CERTIFICATE-----')
+            .replace(/\\n/g, '\n');
+    }
     return fs.readFileSync(value);
 }
 
