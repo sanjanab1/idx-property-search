@@ -18,6 +18,15 @@ function loadCaCert() {
     return fs.readFileSync(value);
 }
 
+if (process.env.DEBUG_CA) {
+    const raw = process.env.DB_SSL_CA || '';
+    console.log('DB_SSL_CA raw length:', raw.length);
+    console.log('DB_SSL_CA raw JSON (first 200 chars):', JSON.stringify(raw.slice(0, 200)));
+    console.log('DB_SSL_CA raw JSON (last 100 chars):', JSON.stringify(raw.slice(-100)));
+    const reconstructed = loadCaCert();
+    console.log('Reconstructed JSON (first 200 chars):', JSON.stringify(String(reconstructed).slice(0, 200)));
+}
+
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
