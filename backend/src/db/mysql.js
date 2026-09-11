@@ -7,24 +7,8 @@ require('dotenv').config();
 function loadCaCert() {
     const value = process.env.DB_SSL_CA;
     if (!value) return undefined;
-    if (value.includes('BEGIN CERTIFICATE')) {
-        // Env var UIs often collapse the PEM's line breaks into one line,
-        // which breaks certificate parsing -- reinsert them if needed.
-        return value
-            .replace(/-----BEGIN CERTIFICATE-----/g, '-----BEGIN CERTIFICATE-----\n')
-            .replace(/-----END CERTIFICATE-----/g, '\n-----END CERTIFICATE-----')
-            .replace(/\\n/g, '\n');
-    }
+    if (value.includes('BEGIN CERTIFICATE')) return value;
     return fs.readFileSync(value);
-}
-
-if (process.env.DEBUG_CA) {
-    const raw = process.env.DB_SSL_CA || '';
-    console.log('DB_SSL_CA raw length:', raw.length);
-    console.log('DB_SSL_CA raw JSON (first 200 chars):', JSON.stringify(raw.slice(0, 200)));
-    console.log('DB_SSL_CA raw JSON (last 100 chars):', JSON.stringify(raw.slice(-100)));
-    const reconstructed = loadCaCert();
-    console.log('Reconstructed JSON (first 200 chars):', JSON.stringify(String(reconstructed).slice(0, 200)));
 }
 
 const pool = mysql.createPool({
